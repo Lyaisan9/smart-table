@@ -1,40 +1,44 @@
-//import {createComparison, defaultRules} from "../lib/compare.js";
+import {createComparison, defaultRules} from "../lib/compare.js";
 
 // @todo: #4.3 — настроить компаратор
-//const compare = createComparison(defaultRules); 
+const compare = createComparison(defaultRules); 
 
 export function initFiltering(elements, indexes) {
     // @todo: #4.1 — заполнить выпадающие списки опциями
-    const updateIndexes = (elements, indexes) => {
-    Object.keys(indexes).forEach((elementName) => {                       // Получаем ключи из объекта // Перебираем по именам
+   const updateIndexes = (elements, indexes) => {
+     Object.keys(indexes)                                    
+ .forEach((elementName) => {                       // Получаем ключи из объекта // Перебираем по именам
         elements[elementName].append(                    // в каждый элемент добавляем опции
             ...Object.values(indexes[elementName])        // формируем массив имён, значений опций
                       .map(name => {   
                         const el = document.createElement('option');
                 el.textContent = name;
                 el.value = name;
-                return el;                    // используйте name как значение и текстовое содержимое
+                return el;                                        // используйте name как значение и текстовое содержимое
                                                         // @todo: создать и вернуть тег опции
-                         }))
-        })
+                      })
+        )
+     })
     }
 
 
+const applyFiltering = (query, state, action) => {
 
-    const applyFiltering = (query, state, action) => {
-   
-        // @todo: #4.2 — обработать очистку поля
-      if (action && action.name === 'clear') {
-            const button = action.target; // кнопка "очистить"
-            const field = button.dataset.field; // имя поля фильтра (например, "searchBySeller")
-            const input = button.parentElement.querySelector(`[data-field="${field}"]`);
+    // @todo: #4.2 — обработать очистку поля
+    if (action && action.name === 'clear') {
+        const field = action.dataset.field; 
 
-            if (input) {
-                input.value = ''; // сбрасываем значение в DOM
-                state[field] = ''; // сбрасываем значение в состоянии
+        if (field) {
+            
+            const parent = action.parentElement;
+            const inputElement = parent.querySelector(`[name="${field}"]`);
+
+            if (inputElement && ['INPUT', 'SELECT'].includes(inputElement.tagName)) {
+                inputElement.value = '';
+                state[field] = '';
             }
         }
-
+    }
          const filter = {};
         Object.keys(elements).forEach(key => {
             if (elements[key]) {
@@ -51,6 +55,4 @@ export function initFiltering(elements, indexes) {
         updateIndexes,
         applyFiltering
     }
-        // @todo: #4.5 — отфильтровать данные используя компаратор
-      //  return data.filter(row => compare(row, state));
 }

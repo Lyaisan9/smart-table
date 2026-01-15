@@ -14,7 +14,7 @@ export function initSorting(columns) {
       // @todo: #3.2 — сбросить сортировки остальных колонок
     } else {
       columns.forEach((column) => {
-        // Перебираем элементы (в columns у нас массив кнопок)  if (column.dataset.field !== action.dataset.field)
+        // Перебираем элементы (в columns у нас массив кнопок)
         if (column.dataset.field !== field){
           // Если это не та кнопка, что нажал пользователь
           column.dataset.value = "none"; // тогда сбрасываем её в начальное состояние
@@ -33,7 +33,5 @@ export function initSorting(columns) {
         return sort ? Object.assign({}, query, { sort }) : query; // по общему принципу, если есть сортировка, добавляем, если нет, то не трогаем query
     } // @todo: #3.3 — получить выбранный режим сортировки
     }
-
-   // return sortCollection(data, field, order);
   };
 

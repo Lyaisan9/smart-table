@@ -16,17 +16,6 @@ export function initData(sourceData) {
         total: item.total_amount
     }));
 
-
-   // const sellers = makeIndex(sourceData.sellers, 'id', v => `${v.first_name} ${v.last_name}`);
-   // const customers = makeIndex(sourceData.customers, 'id', v => `${v.first_name} ${v.last_name}`);
-    //const data = sourceData.purchase_records.map(item => ({
-    //    id: item.receipt_id,
-    //    date: item.date,
-    //    seller: sellers[item.seller_id],
-    //    customer: customers[item.customer_id],
-    //    total: item.total_amount
-    //}));
-    
     const getIndexes = async () => {
        
     if (!sellers || !customers) { // если индексы ещё не установлены, то делаем запросы
@@ -64,7 +53,4 @@ return {
     getIndexes,
     getRecords
 }; 
-
-
-    // return {sellers, customers, data};
 }

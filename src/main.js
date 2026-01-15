@@ -9,9 +9,6 @@ import {processFormData} from "./lib/utils.js";
 import {initTable} from "./components/table.js";
 // @todo: подключение
 
-
-// Исходные данные используемые в render()
-// const {data, ...indexes} = initData(sourceData);
 const API = initData(sourceData);
 
 /**
@@ -39,13 +36,7 @@ async function render(action) {
     let state = collectState(); // состояние полей из таблицы
     
     let query = {}
-    
-    //let result = [...data]; // копируем для последующего изменения
-    // @todo: использование
-   // result = applySearching(result, state, action)
-   //result = applyFiltering(result, state, action); 
-   // result = applySorting(result, state, action);
-   // result = applyPagination(result, state, action); 
+   
    query = applySearching(query, state, action); 
    query = applyFiltering(query, state, action);
    query = applySorting(query, state, action); 
@@ -55,8 +46,6 @@ async function render(action) {
 
     updatePagination(total, query); 
     sampleTable.render(items)
-    //sampleTable.render(result)
-    
 }
 
 const sampleTable = initTable({
@@ -68,8 +57,6 @@ const sampleTable = initTable({
 
 import {initPagination} from "./components/pagination.js";
 const {applyPagination, updatePagination} = initPagination(
-//const applyPagination = initPagination(
-
     sampleTable.pagination.elements,             // передаём сюда элементы пагинации, найденные в шаблоне
     (el, page, isCurrent) => {                    // и колбэк, чтобы заполнять кнопки страниц данными
         const input = el.querySelector('input');
@@ -89,11 +76,6 @@ const applySorting = initSorting([        // Нам нужно передать 
 import {initFiltering} from "./components/filtering.js";
 const {applyFiltering, updateIndexes} = initFiltering(sampleTable.filter.elements)  // передаём элементы фильтра
 
-
-//const applyFiltering = initFiltering(sampleTable.filter.elements, {    // передаём элементы фильтра
- // searchBySeller: indexes.sellers                                 // для элемента с именем searchBySeller устанавливаем массив продавцов
-; 
-
 import {initSearching} from "./components/searching.js";
 // @todo: инициализация
   const applySearching = initSearching('search')
@@ -109,5 +91,5 @@ import {initSearching} from "./components/searching.js";
         searchBySeller: indexes.sellers
     });
   }
-  //render();
+
   init().then(render) 
